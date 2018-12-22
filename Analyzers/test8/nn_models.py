@@ -248,8 +248,9 @@ def create_model_bn(nvariables, lr=0.001, clipnorm=10., nodes1=64, nodes2=32, no
                     l1_reg=0.0, l2_reg=0.0, use_bn=True, use_dropout=False):
   regularizer = regularizers.L1L2(l1=l1_reg, l2=l2_reg)
   inputs = Input(shape=(nvariables,), dtype='float32')
+  if use_bn: x = BatchNormalization(epsilon=1e-4, momentum=0.9)(inputs)  
 
-  x = Dense(nodes1, kernel_initializer='glorot_uniform', kernel_regularizer=regularizer, use_bias=False)(inputs)
+  x = Dense(nodes1, kernel_initializer='glorot_uniform', kernel_regularizer=regularizer, use_bias=False)(x)
   if use_bn: x = BatchNormalization(epsilon=1e-4, momentum=0.9)(x)
   x = Activation('tanh')(x)
   if use_dropout: x = Dropout(0.2)(x)
