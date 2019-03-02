@@ -172,7 +172,7 @@ def weighted_crossentropy(target, output, pos_weight, from_logits=False):
       output = tf.log(output / (1 - output))
     return tf.nn.weighted_cross_entropy_with_logits(targets=target, logits=output, pos_weight=pos_weight)
 
-def masked_binary_crossentropy(y_true, y_pred, mask_value=100., pos_weight=0.333333):
+def masked_binary_crossentropy(y_true, y_pred, mask_value=100., pos_weight=0.5):
   #xx = K.binary_crossentropy(y_true, y_pred)
   xx = weighted_crossentropy(y_true, y_pred, pos_weight=pos_weight) * 2/(1+pos_weight)
 
@@ -248,19 +248,19 @@ def create_model_bn(nvariables, lr=0.001, clipnorm=10., nodes1=64, nodes2=32, no
                     l1_reg=0.0, l2_reg=0.0, use_bn=True, use_dropout=False):
   regularizer = regularizers.L1L2(l1=l1_reg, l2=l2_reg)
   inputs = Input(shape=(nvariables,), dtype='float32')
-  if use_bn: x = BatchNormalization(epsilon=1e-4, momentum=0.9)(inputs)  
+  x = BatchNormalization(epsilon=1e-4, momentum=0.9)(inputs)  
 
-  x = Dense(nodes1, kernel_initializer='glorot_uniform', kernel_regularizer=regularizer, use_bias=False)(x)
+  x = Dense(nodes1, kernel_initializer='glorot_uniform', kernel_regularizer=regularizer, use_bias=True)(x)
   if use_bn: x = BatchNormalization(epsilon=1e-4, momentum=0.9)(x)
   x = Activation('tanh')(x)
   if use_dropout: x = Dropout(0.2)(x)
   if nodes2:
-    x = Dense(nodes2, kernel_initializer='glorot_uniform', kernel_regularizer=regularizer, use_bias=False)(x)
+    x = Dense(nodes2, kernel_initializer='glorot_uniform', kernel_regularizer=regularizer, use_bias=True)(x)
     if use_bn: x = BatchNormalization(epsilon=1e-4, momentum=0.9)(x)
     x = Activation('tanh')(x)
     if use_dropout: x = Dropout(0.2)(x)
     if nodes3:
-      x = Dense(nodes3, kernel_initializer='glorot_uniform', kernel_regularizer=regularizer, use_bias=False)(x)
+      x = Dense(nodes3, kernel_initializer='glorot_uniform', kernel_regularizer=regularizer, use_bias=True)(x)
       if use_bn: x = BatchNormalization(epsilon=1e-4, momentum=0.9)(x)
       x = Activation('tanh')(x)
       if use_dropout: x = Dropout(0.2)(x)

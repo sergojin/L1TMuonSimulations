@@ -16,6 +16,8 @@ mask_value = 100.
 
 discr_pt_cut = 8.
 
+discr_pt_cut_high = 14.
+
 reg_pt_scale = 100.
 
 discr_loss_weight = 20.
@@ -28,10 +30,11 @@ l1_reg = 0.0
 
 l2_reg = 0.0
 
-infile_muon = '../test7/histos_tba.20.npz'
+infile_muon = '/eos/uscms/store/group/l1upgrades/L1MuonTrigger/P2_10_1_5/SingleMuon_Toy_2GeV/histos_tba_oldBend.20.npz'
+#infile_muon='/eos/uscms/store/group/l1upgrades/sergo/EMTF_Run3/histos_tba_robust.20.npz'
 
-infile_pileup = '../test7/histos_tbd.20.npz'
-
+infile_pileup = '/eos/uscms/store/group/l1upgrades/L1MuonTrigger/P2_10_1_5/SingleMuon_Toy_2GeV/histos_tbd_oldBend.20.npz'
+#infile_pileup='/eos/uscms/store/group/l1upgrades/sergo/EMTF_Run3/histos_tba_robust.20.npz'
 
 # ______________________________________________________________________________
 # Import all the libs

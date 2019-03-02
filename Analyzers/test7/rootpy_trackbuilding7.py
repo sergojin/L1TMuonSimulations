@@ -991,9 +991,9 @@ class TrackProducer(object):
 
     if mode in (11,13,14,15) and quality2 <= (quality1+1):
       if np.abs(1.0/y_meas) > 14:
-        trigger = (y_discr > 0.9136) # 98.0% coverage
+        trigger = (y_discr > 0.8597) # 98.0% coverage
       elif np.abs(1.0/y_meas) > discr_pt_cut:
-        trigger = (y_discr > 0.7415) # 98.0% coverage
+        trigger = (y_discr > 0.7217) # 98.0% coverage
       else:
         trigger = (y_discr >= 0.)  # True
     else:
@@ -1158,8 +1158,8 @@ use_condor = ('CONDOR_EXEC' in os.environ)
 
 # Analysis mode
 #analysis = 'verbose'
-analysis = 'application'
-#analysis = 'rates'
+#analysis = 'application'
+analysis = 'rates'
 #analysis = 'effie'
 #analysis = 'mixing'
 #analysis = 'images'
@@ -1180,7 +1180,7 @@ print('[INFO] Using job id        : %s' % jobid)
 # Other stuff
 bankfile = 'pattern_bank.20.npz'
 
-kerasfile = ['model.20.json', 'model_weights.20.h5']
+kerasfile = ['model.r3.1.json', 'model_weights.r3.1.h5']
 
 infile_r = None  # input file handle
 

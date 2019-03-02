@@ -2,7 +2,8 @@ import numpy as np
 
 nlayers = 12  # 5 (CSC) + 4 (RPC) + 3 (GEM)
 
-nvariables = (nlayers * 6) + 3 - 36
+#nvariables = (nlayers * 6) + 3 - 36 
+nvariables = (nlayers * 6) - 36 
 
 nvariables_input = (nlayers * 7) + 3
 
@@ -13,7 +14,7 @@ nparameters_input = 3
 class Encoder(object):
 
   def __init__(self, x, y, adjust_scale=0, reg_pt_scale=1.0,
-               drop_ge11=False, drop_ge21=False, drop_me0=False, drop_irpc=False):
+               drop_ge11=True, drop_ge21=True, drop_me0=True, drop_irpc=True):
     if x is not None and y is not None:
       assert(x.shape[1] == nvariables_input)
       assert(y.shape[1] == nparameters_input)
@@ -72,7 +73,7 @@ class Encoder(object):
       self.x_zone         = self.x_road[:, 1][:, np.newaxis]
 
       # Subtract median phi from hit phis
-      self.x_phi_median    = self.x_road[:, 2] * 32 - 5.5  # multiply by 'quadstrip' unit (4 * 8)
+      self.x_phi_median    = self.x_road[:, 2] * 32  # multiply by 'quadstrip' unit (4 * 8)
       self.x_phi_median    = self.x_phi_median[:, np.newaxis]
       self.x_phi          -= self.x_phi_median
 
@@ -80,7 +81,7 @@ class Encoder(object):
       self.x_theta_median  = np.nanmedian(self.x_theta[:,:5], axis=1)  # CSC only
       #self.x_theta_median[np.isnan(self.x_theta_median)] = np.nanmedian(self.x_theta[np.isnan(self.x_theta_median)], axis=1)  # use all types
       self.x_theta_median  = self.x_theta_median[:, np.newaxis]
-      self.x_theta        -= self.x_theta_median
+      #self.x_theta        -= self.x_theta_median
 
       # Standard scales
       # + Remove outlier hits by checking hit thetas
@@ -113,6 +114,16 @@ class Encoder(object):
           self.x_ring[:, 5:12] = 0  # ring for only ME2-4
           self.x_ring[:, 0:2]  = 0  # ^
           self.x_fr  [:, 2:11] = 0  # fr for only ME1/1, ME1/2, ME0
+          
+          self.x_phi [:, 9:12] = 0  # 10:12 if enable GE11
+          self.x_theta [:, 9:12] = 0  # 10:12 if enable GE11
+          self.x_bend [:, 11:12] = 0
+          self.x_fr [:, 11:12] = 0
+            
+          #self.x_straightness [:]  = 0  
+          #self.x_zone [:]= 0
+          #self.x_theta_median [:] = 0
+           
         s = [ 0.004297,  0.016739, -0.024291, -0.015480, -0.010096,  0.022451,
              -0.034070, -0.012700, -0.007666,  0.003452, -0.024124,  0.003120,
               0.677816,  0.696196,  1.433512,  1.540938,  1.029405,  0.226928,
@@ -128,7 +139,7 @@ class Encoder(object):
               1.000000,  1.000000,  1.000000,  1.000000,  1.000000,  1.000000,
               1.000000,  1.000000,  1.000000,  1.000000,  1.000000,  1.000000,
               1.000000,  1.000000,  1.000000]
-        self.x_copy *= s
+      #  self.x_copy *= s
 
       # Remove outlier hits by checking hit thetas
       #self.x_phi  [x_theta_tmp] = np.nan
@@ -140,9 +151,9 @@ class Encoder(object):
       #self.x_mask [x_theta_tmp] = 1
 
       # Add variables: straightness, zone, theta_median and mode variables
-      self.x_straightness = (self.x_straightness - 4.) / 4.   # scaled to [-1,1]
-      self.x_zone         = (self.x_zone - 0.) / 5.           # scaled to [0,1]
-      self.x_theta_median = (self.x_theta_median - 3.) / 83.  # scaled to [0,1]
+      #self.x_straightness = (self.x_straightness - 4.) / 4.   # scaled to [-1,1]
+      #self.x_zone         = (self.x_zone - 0.) / 5.           # scaled to [0,1]
+      #self.x_theta_median = (self.x_theta_median - 3.) / 83.  # scaled to [0,1]
       hits_to_station = np.array((5,1,2,3,4,1,2,3,4,5,2,5), dtype=np.int32)  # '5' denotes ME1/1
       assert(len(hits_to_station) == nlayers)
       self.x_mode_vars = np.zeros((self.nentries, 5), dtype=np.bool)
@@ -180,9 +191,12 @@ class Encoder(object):
     return x
 
   def get_x(self, drop_columns_of_zeroes=True):
+    #x_new = np.hstack((self.x_phi, self.x_theta, self.x_bend,
+    #                   self.x_time, self.x_ring, self.x_fr,
+    #                   self.x_straightness, self.x_zone, self.x_theta_median))
     x_new = np.hstack((self.x_phi, self.x_theta, self.x_bend,
-                       self.x_time, self.x_ring, self.x_fr,
-                       self.x_straightness, self.x_zone, self.x_theta_median))
+                       self.x_time, self.x_ring, self.x_fr))
+    
     # Drop input nodes
     if drop_columns_of_zeroes:
       drop_phi    = [nlayers*0 + x for x in xrange(0,0)]  # keep everyone
@@ -192,7 +206,17 @@ class Encoder(object):
       drop_ring   = [nlayers*4 + x for x in xrange(5,12)] # ring for only ME2, ME3, ME4
       drop_ring  += [nlayers*4 + x for x in xrange(0,2)]  # ^
       drop_fr     = [nlayers*5 + x for x in xrange(2,11)] # fr for only ME1/1, ME1/2, ME0
+    
+      #drop_phi    = [nlayers*0 + x for x in xrange(9,12)]  # keep everyone
+      #drop_theta  = [nlayers*1 + x for x in xrange(9,12)]  # keep everyone
+      #drop_bend   = [nlayers*2 + x for x in xrange(5,12)] # no bend for RPC, GEM
+      #drop_time   = [nlayers*3 + x for x in xrange(0,12)] # no time for everyone
+      #drop_ring   = [nlayers*4 + x for x in xrange(5,12)] # ring for only ME2, ME3, ME4
+      #drop_ring  += [nlayers*4 + x for x in xrange(0,2)]  # ^
+      #drop_fr     = [nlayers*5 + x for x in xrange(2,12)] # fr for only ME1/1, ME1/2, ME0
 
+      #drop_pattern = [nlayers*6 + x for x in xrange(0,3)]  
+        
       x_dropit = np.zeros(x_new.shape[1], dtype=np.bool)
       for i in drop_phi + drop_theta + drop_bend + drop_time + drop_ring + drop_fr:
         x_dropit[i] = True
