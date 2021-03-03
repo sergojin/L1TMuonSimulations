@@ -1,0 +1,75 @@
+# Automatically generated on Wed Aug 15 13:41:52 EDT 2018
+universe = vanilla
+should_transfer_files = YES
+
+executable = worker.sh
+#arguments = effie $(url)
+transfer_input_files = default.tgz
+output = logs/job_$(Cluster)_$(Process).out
+error = logs/job_$(Cluster)_$(Process).err
+log = logs/job_$(Cluster)_$(Process).log
+
++ProjectName = cms.org.ufl
+
+#queue
+
+arguments = effie 0
+queue 1
+arguments = effie 1
+queue 1
+arguments = effie 2
+queue 1
+arguments = effie 3
+queue 1
+arguments = effie 4
+queue 1
+arguments = effie 5
+queue 1
+arguments = effie 6
+queue 1
+arguments = effie 7
+queue 1
+arguments = effie 8
+queue 1
+arguments = effie 9
+queue 1
+arguments = effie 10
+queue 1
+arguments = effie 11
+queue 1
+arguments = effie 12
+queue 1
+arguments = effie 13
+queue 1
+arguments = effie 14
+queue 1
+arguments = effie 15
+queue 1
+arguments = effie 16
+queue 1
+arguments = effie 17
+queue 1
+arguments = effie 18
+queue 1
+arguments = effie 19
+queue 1
+arguments = effie 20
+queue 1
+arguments = effie 21
+queue 1
+arguments = effie 22
+queue 1
+arguments = effie 23
+queue 1
+arguments = effie 24
+queue 1
+arguments = effie 25
+queue 1
+arguments = effie 26
+queue 1
+arguments = effie 27
+queue 1
+arguments = effie 28
+queue 1
+arguments = effie 29
+queue 1

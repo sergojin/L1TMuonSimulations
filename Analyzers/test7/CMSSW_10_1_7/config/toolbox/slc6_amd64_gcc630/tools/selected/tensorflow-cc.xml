@@ -1,0 +1,11 @@
+<tool name="tensorflow-cc" version="1.5.0-omkpbe">
+  <lib name="tensorflow_cc"/>
+  <lib name="tensorflow_framework"/>
+  <client>
+    <use name="eigen"/>
+    <use name="protobuf"/>
+    <environment name="TENSORFLOW_CC_BASE" default="/cvmfs/cms.cern.ch/slc6_amd64_gcc630/external/tensorflow-cc/1.5.0-omkpbe"/>
+    <environment name="LIBDIR" default="$TENSORFLOW_CC_BASE/tensorflow_cc/lib"/>
+    <environment name="INCLUDE" default="$TENSORFLOW_CC_BASE/tensorflow_cc/include"/>
+  </client>
+</tool>

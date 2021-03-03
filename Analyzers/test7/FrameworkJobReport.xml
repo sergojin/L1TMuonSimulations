@@ -1,0 +1,5 @@
+<FrameworkJobReport>
+<FrameworkError ExitStatus="1" Type="" >
+This is an error message.
+</FrameworkError>
+</FrameworkJobReport>

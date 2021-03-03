@@ -1,0 +1,10 @@
+<tool name="dire" version="2.001-omkpbe2">
+  <lib name="dire"/>
+  <client>
+    <environment name="DIRE_BASE" default="/cvmfs/cms.cern.ch/slc6_amd64_gcc630/external/dire/2.001-omkpbe2"/>
+    <environment name="LIBDIR" default="$DIRE_BASE/lib"/>
+    <environment name="INCLUDE" default="$DIRE_BASE/include"/>
+  </client>
+  <use name="root_cxxdefaults"/>
+  <use name="pythia8"/>
+</tool>

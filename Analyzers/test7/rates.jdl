@@ -1,0 +1,81 @@
+# Automatically generated on Wed Aug 15 13:41:50 EDT 2018
+universe = vanilla
+should_transfer_files = YES
+
+executable = worker.sh
+#arguments = rates $(url)
+transfer_input_files = default.tgz
+output = logs/job_$(Cluster)_$(Process).out
+error = logs/job_$(Cluster)_$(Process).err
+log = logs/job_$(Cluster)_$(Process).log
+
++ProjectName = cms.org.ufl
+
+#queue
+
+arguments = rates 30
+queue 1
+arguments = rates 31
+queue 1
+arguments = rates 32
+queue 1
+arguments = rates 33
+queue 1
+arguments = rates 34
+queue 1
+arguments = rates 35
+queue 1
+arguments = rates 36
+queue 1
+arguments = rates 37
+queue 1
+arguments = rates 38
+queue 1
+arguments = rates 39
+queue 1
+arguments = rates 40
+queue 1
+arguments = rates 41
+queue 1
+arguments = rates 42
+queue 1
+arguments = rates 43
+queue 1
+arguments = rates 44
+queue 1
+arguments = rates 45
+queue 1
+arguments = rates 46
+queue 1
+arguments = rates 47
+queue 1
+arguments = rates 48
+queue 1
+arguments = rates 49
+queue 1
+arguments = rates 50
+queue 1
+arguments = rates 51
+queue 1
+arguments = rates 52
+queue 1
+arguments = rates 53
+queue 1
+arguments = rates 54
+queue 1
+arguments = rates 55
+queue 1
+arguments = rates 56
+queue 1
+arguments = rates 57
+queue 1
+arguments = rates 58
+queue 1
+arguments = rates 59
+queue 1
+arguments = rates 60
+queue 1
+arguments = rates 61
+queue 1
+arguments = rates 62
+queue 1

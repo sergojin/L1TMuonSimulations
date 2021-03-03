@@ -1,0 +1,3 @@
+<tool name="py2-futures" version="3.2.0-omkpbe">
+  <use name="py2-pippkgs"/>
+</tool>

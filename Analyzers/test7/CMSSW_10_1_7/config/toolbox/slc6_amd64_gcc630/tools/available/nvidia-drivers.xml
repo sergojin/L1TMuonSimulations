@@ -1,0 +1,7 @@
+<tool name="nvidia-drivers" version="9.1.85-omkpbe3">
+  <info url="https://docs.nvidia.com/cuda/index.html"/>
+  <client>
+    <environment name="NVIDIA_DRIVERS_BASE" default="/cvmfs/cms.cern.ch/slc6_amd64_gcc630/external/cuda/9.1.85-omkpbe3"/>
+    <environment name="LIBDIR"              default="$NVIDIA_DRIVERS_BASE/drivers"/>
+  </client>
+</tool>

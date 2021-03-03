@@ -1,0 +1,3 @@
+<tool name="py2-requests" version="2.18.4-omkpbe">
+  <use name="py2-pippkgs"/>
+</tool>

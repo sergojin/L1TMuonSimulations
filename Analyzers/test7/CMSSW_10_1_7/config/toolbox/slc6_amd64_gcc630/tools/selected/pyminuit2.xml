@@ -1,0 +1,6 @@
+<tool name="pyminuit2" version="0.0.1-omkpbe5">
+<client>
+<environment name="PYMINUIT2_BASE" default="/cvmfs/cms.cern.ch/slc6_amd64_gcc630/external/pyminuit2/0.0.1-omkpbe5"/>
+</client>
+<runtime name="PYTHON27PATH" value="$PYMINUIT2_BASE/lib/python2.7/site-packages" type="path"/>
+</tool>

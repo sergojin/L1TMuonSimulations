@@ -36,9 +36,9 @@ def muon_data(filename, adjust_scale=0, reg_pt_scale=1.0, correct_for_eta=False)
 
 def muon_data_split(filename, adjust_scale=0, reg_pt_scale=1.0, test_size=0.5, correct_for_eta=False):
   x, y, w, x_mask = muon_data(filename, adjust_scale=adjust_scale, reg_pt_scale=reg_pt_scale, correct_for_eta=correct_for_eta)
-
   # Split dataset in training and testing
   x_train, x_test, y_train, y_test, w_train, w_test, x_mask_train, x_mask_test = train_test_split(x, y, w, x_mask, test_size=test_size)
+  print x_test[0:10,:]  
   logger.info('Loaded # of training and testing events: {0}'.format((x_train.shape[0], x_test.shape[0])))
 
   # Check for cases where the number of events in the last batch could be too few

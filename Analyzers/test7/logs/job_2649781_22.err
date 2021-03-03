@@ -1,0 +1,5 @@
+Cannot parse "setup" - file /uscms/homes/s/sergo/EMTF++/CMSSW_10_1_7/src/L1TMuonSimulations/Analyzers/test7/CMSSW_10_1_7/config/Self.xml not known
+  File "rootpy_trackbuilding7.py", line 776
+    amap = {road.id : road for road in roads}
+                             ^
+SyntaxError: invalid syntax

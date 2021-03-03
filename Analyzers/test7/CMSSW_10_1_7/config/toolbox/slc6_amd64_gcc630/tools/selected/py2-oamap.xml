@@ -1,0 +1,3 @@
+<tool name="py2-oamap" version="0.10.10-omkpbe">
+  <use name="py2-pippkgs_depscipy"/>
+</tool>
