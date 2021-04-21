@@ -485,6 +485,7 @@ def create_model_sequential_bn(nvariables, lr=0.001, clipnorm=10., nodes1=64, no
 def save_my_model(model, name='model'):
   # Store model to file
   #model.summary()
+  model.save('model')
   model.save(name + '.h5')
   model.save_weights(name + '_weights.h5')
   # Store model to json
