@@ -7,12 +7,13 @@ import tensorflow as tf
 
 from keras import backend as K
 from keras.models import Sequential, Model, clone_model, load_model, model_from_json
-from keras.layers import Dense, Activation, Dropout, Input, Concatenate, Lambda, BatchNormalization
+from keras.layers import Dense, Activation, Dropout, Input, InputLayer, Concatenate, Lambda, BatchNormalization
 from keras.layers.advanced_activations import LeakyReLU
 from keras.callbacks import LearningRateScheduler, TerminateOnNaN, ModelCheckpoint
 from keras.regularizers import Regularizer
 from keras.constraints import Constraint
 from keras import initializers, regularizers, optimizers, losses
+
 
 import h5py
 import json
@@ -290,8 +291,10 @@ def create_model_sequential_bn2(nvariables, lr=0.001, clipnorm=10., nodes1=64, n
   regularizer = regularizers.L1L2(l1=l1_reg, l2=l2_reg)
     
   model = Sequential()  
-  if use_bn: model.add(BatchNormalization(input_shape=(nvariables,), epsilon=1e-4, momentum=0.9))
-
+    
+  model.add(InputLayer(input_shape=(nvariables,), name="input1")) 
+  if use_bn: model.add(BatchNormalization(epsilon=1e-4, momentum=0.9))
+    
   model.add(Dense(nodes1, kernel_initializer='glorot_uniform', kernel_regularizer=regularizer, use_bias=False))
   if use_bn: model.add(BatchNormalization(epsilon=1e-4, momentum=0.9))
   model.add(Activation('tanh'))
